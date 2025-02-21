@@ -102,6 +102,35 @@
             background-color: #111;
             color: #ffcc00;
         }
+
+        @media (max-width: 768px) {
+            .masthead .intro-body {
+                padding-top: 40px;
+            }
+
+            .masthead h1 {
+                font-size: 1.5rem;
+            }
+
+            .content-section {
+                padding: 10px;
+                margin: 10px auto;
+            }
+
+            .content-section h2,
+            .content-section h1 {
+                font-size: 1.25rem;
+            }
+
+            .content-section p,
+            .content-section ul {
+                font-size: 0.875rem;
+            }
+
+            .table {
+                font-size: 0.875rem;
+            }
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -187,7 +216,7 @@
     ">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto">
+                <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
                     <h2>About Hand Of Legend</h2>
                     <p>
                         The 'Hand of Legend' is an innovative application designed to distribute bitcoin worldwide. Each draw includes a specific number of tickets, and once this number is reached, a live draw takes place.
@@ -204,7 +233,7 @@
     </section>
     <section id="faq" class="text-center faq-section">
         <div class="container-fluid">
-            <div class="col-lg-10 mx-auto">
+            <div class="col-lg-10 col-md-12 col-sm-12 mx-auto">
                 <h1>FAQ</h1>
                 <p class="text-center">
                     Here are some frequently asked questions about The Hand of Legend:
@@ -270,7 +299,7 @@
     <section class="text-center content-section" id="winners">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto">
+                <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
                     <h2>Winners</h2>
                     <table class="table table-striped mt-3">
                         <thead>
@@ -306,7 +335,7 @@
     <section class="text-center content-section" id="wallets">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto">
+                <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
                     <h2>Wallets and Tickets</h2>
                     <input type="text" id="walletSearch" class="form-control mt-3" placeholder="Search for your wallet address..." onkeyup="filterWallets()">
                     <table class="table table-striped mt-3">
