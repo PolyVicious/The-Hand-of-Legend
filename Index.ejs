@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Index</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700&amp;display=swap" />
+    <link rel="stylesheet" href="/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="/css/Hero-Travel.css" />
+    <link rel="stylesheet" href="/css/untitled.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+    <style>
+        body {
+            cursor: url("/img/custom-cursor.png"), auto;
+            background-color: #000;
+            color: #fff;
+            font-family: "Cabin", sans-serif;
+        }
+
+        a:hover,
+        button:hover,
+        .btn:hover {
+            cursor: url("/img/custom-cursor-clickable.png"), pointer;
+        }
+
+        .navbar {
+            background-color: #111;
+            border-bottom: 2px solid #ffcc00;
+        }
+
+        .navbar-brand {
+            font-family: "Lora", serif;
+            color: #ffcc00 !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffcc00 !important;
+        }
+
+        .masthead {
+            background-image: url("/img/intro-bg.png");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .masthead .intro-body {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            padding-top: 80px; /* Add padding to the top */
+        }
+
+        .masthead h1 {
+            color: #ffcc00;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .btn-link {
+            color: #ffcc00;
+            text-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
+        }
+
+        .btn-link, .btn-primary {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .content-section {
+            background-color: #111;
+            border: 2px solid #ffcc00;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .content-section h2,
+        .content-section h1 {
+            color: #ffcc00;
+        }
+
+        .content-section p,
+        .content-section ul {
+            color: #fff;
+        }
+
+        .btn-primary {
+            background-color: #ffcc00;
+            border-color: #ffcc00;
+            color: #000;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-primary:hover {
+            background-color: #e6b800;
+            border-color: #e6b800;
+        }
+
+        footer {
+            background-color: #111;
+            color: #ffcc00;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const ws = new WebSocket("ws://" + window.location.host);
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.remainingTickets !== undefined) {
+                    const remainingTicketsElement = document.getElementById("remaining-tickets");
+                    remainingTicketsElement.textContent = Math.max(0, data.remainingTickets);
+                }
+                if (data.winner !== undefined) {
+                    const lastWinnerElement = document.getElementById("last-winner");
+                    lastWinnerElement.textContent = data.winner || "No winner yet";
+                }
+            };
+        });
+    </script>
+</head>
+
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77">
+    <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand custom-navbar-brand" href="/Index">The hand of legend</a>
+            <button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item nav-link">
+                        <a class="nav-link active" href="#about">About</a>
+                    </li>
+                    <li class="nav-item nav-link">
+                        <a class="nav-link" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item nav-link">
+                        <a class="nav-link" href="#wallets">Wallets</a>
+                    </li>
+                    <!-- Add the language switch button here -->
+                    <li class="nav-item nav-link">
+                        <button id="language-switch" class="btn btn-link" style="color: #ffcc00;">Ελληνικά</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead" style="background-image: url('/img/intro-bg.png'); background-size: cover; background-position: center;">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row justify-content-center" style="background: rgba(0, 0, 0, 0.7); padding: 50px 0; border-radius: 16px;">
+                    <div class="col-lg-8 text-center">
+                        <h1 class="fs-1 shadow-sm brand-heading" style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                            <span style="font-weight: normal !important">THE HAND OF LEGEND</span><br />
+                            <span id="become-next-winner" style="font-weight: normal !important">BECOME THE NEXT WINNER</span><br />
+                            <span id="live-draw" style="font-weight: normal !important">LIVE DRAW WITH 0.15 BTC</span><br />
+                            <span id="only-btc" style="font-weight: normal !important">WITH ONLY 0.0001 BTC</span><br /><br />
+                        </h1>
+                        <div class="text-center" style="margin: 20px 0">
+                            <p>
+                                <span class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Remaining Tickets: </span>
+                                <span id="remaining-tickets" class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"><%= remainingTickets %></span>
+                            </p>
+                            <p>
+                                <span class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;">Ticket Purchase Address: </span>
+                                <span id="ticket-purchase-address" class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;"><%= hostWalletAddress %></span>
+                            </p>
+                            <p>
+                                <span class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;">Last Winner: </span>
+                                <span id="last-winner" class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;"><%= lastWinner ? `${lastWinner.address}` : "No winners yet" %></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-link btn-circle mt-4" role="button" href="#about" style="color: #ffcc00">
+                    <i class="fa fa-angle-double-down animated"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <section class="text-center content-section" id="about" style="
+      background-image: url('/img/intro-bg.jpg');
+      background-size: cover;
+      background-position: center;
+    ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>About Hand Of Legend</h2>
+                    <p>
+                        The 'Hand of Legend' is an innovative application designed to distribute bitcoin worldwide. Each draw includes a specific number of tickets, and once this number is reached, a live draw takes place.
+                    </p>
+                    <p>
+                        Lucky winners receive up to 0.15 BTC, offering a unique experience of excitement and anticipation. The application is designed with simplicity and transparency in mind, making it user-friendly and fair for everyone.
+                    </p>
+                    <p>
+                        The 'Hand of Legend' incorporates modern technologies and is tailored to the needs of the era, offering an exciting opportunity for everyone to claim prizes in a fair and fun way.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="faq" class="text-center faq-section">
+        <div class="container-fluid">
+            <div class="col-lg-10 mx-auto">
+                <h1>FAQ</h1>
+                <p class="text-center">
+                    Here are some frequently asked questions about The Hand of Legend:
+                </p>
+                <ul class="list-unstyled">
+                    <h2 class="vc_custom_heading">How to Play?</h2>
+                    <p>Entering the lottery is easy – all you need are one or more lottery tickets that make you eligible to participate.</p>
+
+                    <h2 class="vc_custom_heading">How to Buy Tickets?</h2>
+                    <p>
+                        If you’d like to add to your ticket total further, you can buy lottery tickets by sending bitcoin to
+                        <%= hostWalletAddress %>. A ticket costs 10000 satoshi or 0.0001 BTC, and there are no limits to the number of tickets you can buy.
+                    </p>
+
+                    <h2 class="vc_custom_heading">How to win the Hand Of Legend?</h2>
+                    <p>
+                        Once you start accumulating lottery tickets, you can check your ticket total on the Lottery page on the FreeBitco.in website. The ‘Your Tickets’ section, of course, tells you your personal lottery ticket total. The ‘Total Tickets’ section tells you the
+                        total number of tickets that are actually in the pot, and the ‘Win Chance’ section calculates your chance of winning in the bitcoin lottery. To have a better chance at winning, accumulate the highest number of tickets possible
+                        for you during the week. The higher the number of lottery tickets you have, the higher your chances of winning the bitcoin lottery.
+                    </p>
+
+                    <h2 class="vc_custom_heading">How Does the Hand Of Legend Work?</h2>
+                    <p>
+                        This lottery is provably fair. What that means is that there is no way the site can cheat you by picking a lottery winner who we favour. All winners are picked randomly and the method for picking the winners is described below.
+                    </p>
+                    <p>
+                        1. At the beginning of each round, we generate a server seed for that round.
+                    </p>
+                    <p>
+                        2. When a lottery round has concluded, we make a list of all wallets and their lottery tickets.
+                    </p>
+                    <p>
+                        3. We then use this list to assign ticket numbers for all tickets. For example if wallet1 has 10 tickets and wallet2 has 20 tickets, then wallet1 will have ticket numbers 0 to 9 and wallet2 will have ticket numbers from 10 to 29. This is done for all
+                        wallets.
+                    </p>
+                    <p>
+                        4. Then the current bitcoin block number is recorded and a block number that is 12 blocks into the future is decided on. The block hash of this future block is used as a “client seed” ie. a seed that we are not aware of.
+                    </p>
+                    <p>
+                        5. The winning ticket numbers will be calculated as described below:
+                    </p>
+                    <ul style="text-align: left;">
+                        <li>A string (STRING1) is created – “[SERVER SEED]:[BLOCK HASH]:[WINNING POSITION]”.</li>
+                        <li>The SHA256 hash of STRING1 is calculated and the first 8 characters of this hash are taken (STRING2).</li>
+                        <li>STRING2 is converted to a decimal which gives us a number between 0 and 4,294,967,295 (NUM1).</li>
+                        <li>NUM1 is then multiplied by the (total number of tickets minus 1) and divided by 4,294,967,295 to get a number (NUM2) between 0 and the total number of tickets less 1.</li>
+                        <li>NUM2 is then rounded off to the nearest whole number which is the winning ticket number.</li>
+                    </ul>
+                    <p></p>
+                    <h2 class="vc_custom_heading">How is the system Provably Fair?</h2>
+                    <p>
+                        The system described above that is used for picking the winners is provably fair because it has multiple safeguards in place to ensure that winners are picked randomly and fairly. We use a future bitcoin block hash as the “client seed” ie. a seed that
+                        we do not know of. All bitcoin block hashes are unique and nobody knows what the block hash of a future block will be until the block has been mined. </p>
+                    <h2 class="vc_custom_heading">How do I check the Results?</h2>
+                    <p>
+                        When all tickets are sold, all your lottery tickets will be entered into the draw. The process mentioned below will determine 1 random winner, with the winner earning up to 0.15 in BTC. Scrolling down on the Lottery page, you’ll find the leaderboard that
+                        shows the last 10 winners.
+                    </p>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="text-center content-section" id="winners">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Winners</h2>
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Wallet Address</th>
+                                <th style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (winners.length > 0) { %>
+                                <% winners.forEach(winner => { %>
+                                    <tr>
+                                        <td style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                                            <%= winner.address %>
+                                        </td>
+                                        <td style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                                            <%= winner.timestamp %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="2" style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">No winners yet</td>
+                                            </tr>
+                                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center content-section" id="wallets">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Wallets and Tickets</h2>
+                    <input type="text" id="walletSearch" class="form-control mt-3" placeholder="Search for your wallet address..." onkeyup="filterWallets()">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Wallet Address</th>
+                                <th style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Tickets Purchased</th>
+                            </tr>
+                        </thead>
+                        <tbody id="walletTableBody">
+                            <% for (let wallet in tickets) { %>
+                                <tr>
+                                    <td style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                                        <%= wallet %>
+                                    </td>
+                                    <td style="color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                                        <%= tickets[wallet] %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function filterWallets() {
+            const input = document.getElementById('walletSearch');
+            const filter = input.value.toLowerCase();
+            const tableBody = document.getElementById('walletTableBody');
+            const rows = tableBody.getElementsByTagName('tr');
+    
+            for (let i = 0; i < rows.length; i++) {
+              const walletCell = rows[i].getElementsByTagName('td')[0];
+              if (walletCell) {
+                const walletText = walletCell.textContent || walletCell.innerText;
+                if (walletText.toLowerCase().indexOf(filter) > -1) {
+                  rows[i].style.display = '';
+                } else {
+                  rows[i].style.display = 'none';
+                }
+              }
+            }
+          }
+    
+          // Define English and Greek content
+          const content = {
+            en: {
+              aboutTitle: "About Hand Of Legend",
+              aboutText1: "The 'Hand of Legend' is an innovative application designed to distribute cash prizes worldwide. Each draw includes a specific number of tickets, and once this number is reached, a live draw takes place.",
+              aboutText2: "Lucky winners receive cash prizes, offering a unique experience of excitement and anticipation. The application is designed with simplicity and transparency in mind, making it user-friendly and fair for everyone.",
+              aboutText3: "The 'Hand of Legend' incorporates modern technologies and is tailored to the needs of the era, offering an exciting opportunity for everyone to claim prizes in a fair and fun way.",
+              faqTitle: "FAQ",
+              faqText: "Here are some frequently asked questions about The Hand of Legend:",
+              walletsTitle: "Wallets and Tickets",
+              winnersTitle: "Winners",
+              remainingTickets: "Remaining Tickets: ",
+              ticketPurchaseAddress: "Ticket Purchase Address: ",
+              lastWinner: "Last Winner: ",
+              noWinnersYet: "No winners yet",
+              becomeNextWinner: "BECOME THE NEXT WINNER",
+              liveDraw: "LIVE DRAW WITH 0.15 BTC",
+              onlyBTC: "WITH ONLY 0.0001 BTC",
+              // FAQ Content in English
+              faqHowToPlay: "How to Play the Lottery?",
+              faqHowToPlayText: "Entering the lottery is easy – all you need are one or more lottery tickets that make you eligible to participate.",
+              faqHowToBuy: "How to Buy Lottery Tickets?",
+              faqHowToBuyText: "If you’d like to add to your ticket total further, you can buy lottery tickets by sending bitcoin to <%= hostWalletAddress %>. A ticket costs 10000 satoshi or 0.0001 BTC, and there are no limits to the number of tickets you can buy.",
+              faqHowToWin: "How to win the Bitcoin Lottery?",
+              faqHowToWinText: "Once you start accumulating lottery tickets, you can check your ticket total on the Lottery page on the FreeBitco.in website. The ‘Your Tickets’ section, of course, tells you your personal lottery ticket total. The ‘Total Tickets’ section tells you the total number of tickets that are actually in the pot, and the ‘Win Chance’ section calculates your chance of winning in the bitcoin lottery. To have a better chance at winning, accumulate the highest number of tickets possible for you during the week. The higher the number of lottery tickets you have, the higher your chances of winning the bitcoin lottery.",
+              faqHowItWorks: "How Does Bitcoin Lottery Work?",
+              faqHowItWorksText: "This lottery is provably fair. What that means is that there is no way the site can cheat you by picking a lottery winner who we favour. All winners are picked randomly and the method for picking the winners is described below.",
+              faqProvablyFair: "How is the system Provably Fair?",
+              faqProvablyFairText: "The system described above that is used for picking the winners is provably fair because it has multiple safeguards in place to ensure that winners are picked randomly and fairly. We use a future bitcoin block hash as the “client seed” ie. a seed that we do not know of. All bitcoin block hashes are unique and nobody knows what the block hash of a future block will be until the block has been mined.",
+              faqCheckResults: "How do I check the Lottery Results?",
+              faqCheckResultsText: "When all tickets are sold, all your lottery tickets will be entered into the draw. The process mentioned below will determine 1 random winner, with the winner earning up to 0.15 in BTC. Scrolling down on the Lottery page, you’ll find the leaderboard that shows the last 10 winners."
+            },
+            el: {
+              aboutTitle: "Σχετικά με το Hand Of Legend",
+              aboutText1: "Το 'Hand of Legend' είναι μια καινοτόμος εφαρμογή που έχει ως στόχο να μοιράζει Bitcoin στον κόσμο. Κάθε κλήρωση περιλαμβάνει έναν συγκεκριμένο αριθμό λαχνών, και μόλις συμπληρωθεί αυτός ο αριθμός, πραγματοποιείται μια ζωντανή κλήρωση.",
+              aboutText2: "Οι τυχεροί νικητές κερδίζουν μεχρι και 0.15 BTC, προσφέροντας έτσι μια μοναδική εμπειρία ενθουσιασμού και προσδοκίας. Η εφαρμογή έχει σχεδιαστεί με γνώμονα την απλότητα και τη διαφάνεια, καθιστώντας την εύχρηστη και δίκαιη για όλους.",
+              aboutText3: "Το 'Hand of Legend' ενσωματώνει σύγχρονες τεχνολογίες και είναι προσαρμοσμένη στις ανάγκες της εποχής, προσφέροντας μια συναρπαστική ευκαιρία για όλους να διεκδικήσουν έπαθλα με δίκαιο και διασκεδαστικό τρόπο.",
+              faqTitle: "Συχνές Ερωτήσεις",
+              faqText: "Ακολουθούν μερικές συχνές ερωτήσεις σχετικά με το Hand of Legend:",
+              walletsTitle: "Πορτοφόλια και Εισιτήρια",
+              winnersTitle: "Νικητές",
+              remainingTickets: "Εναπομείναντα Εισιτήρια: ",
+              ticketPurchaseAddress: "Διεύθυνση Αγοράς Εισιτηρίων: ",
+              lastWinner: "Τελευταίος Νικητής: ",
+              noWinnersYet: "Δεν υπάρχουν νικητές ακόμα",
+              becomeNextWinner: "ΓΙΝΕ Ο ΕΠΟΜΕΝΟΣ ΝΙΚΗΤΗΣ",
+              liveDraw: "LIVE ΚΛΗΡΩΣΗ ΜΕ 0.15 BTC",
+              onlyBTC: "ΜΕ ΜΟΝΟ 0.0001 BTC",
+              // FAQ Content in Greek
+              faqHowToPlay: "Πώς να Παίξετε στο Hand Of Legend;",
+              faqHowToPlayText: "Η συμμετοχή στο Hand Of Legend είναι εύκολη – το μόνο που χρειάζεστε είναι ένα ή περισσότερα εισιτήρια Hand Of Legend που σας καθιστούν επιλέξιμους να συμμετάσχετε.",
+              faqHowToBuy: "Πώς να Αγοράσετε Εισιτήρια Hand Of Legend;",
+              faqHowToBuyText: "Αν επιθυμείτε να αυξήσετε τον αριθμό των εισιτηρίων σας, μπορείτε να αγοράσετε εισιτήρια στέλνοντας Bitcoin στη διεύθυνση <%= hostWalletAddress %>. Κάθε εισιτήριο κοστίζει 10,000 satoshi ή 0.0001 BTC, και δεν υπάρχει όριο στον αριθμό των εισιτηρίων που μπορείτε να αγοράσετε.",
+              faqHowToWin: "Πώς να Κερδίσετε το Bitcoin Hand Of Legend;",
+              faqHowToWinText: "Μόλις αρχίσετε να συγκεντρώνετε εισιτήρια, μπορείτε να ελέγξετε τον συνολικό αριθμό τους στη σελίδα του Hand Of Legend. Η ενότητα «Τα Εισιτήριά σας» σας εμφανίζει τον προσωπικό σας αριθμό εισιτηρίων. Η ενότητα «Συνολικά Εισιτήρια» σας εμφανίζει τον συνολικό αριθμό των εισιτηρίων που έχουν αγοραστεί, και η ενότητα «Πιθανότητα Νίκης» υπολογίζει τις πιθανότητές σας να κερδίσετε. Για να αυξήσετε τις πιθανότητές σας να κερδίσετε, συγκεντρώστε όσο το δυνατόν περισσότερα εισιτήρια. Όσο υψηλότερος είναι ο αριθμός των εισιτηρίων σας, τόσο μεγαλύτερες είναι οι πιθανότητές σας να κερδίσετε.",
+              faqHowItWorks: "Πώς Λειτουργεί το Bitcoin Hand Of Legend;",
+              faqHowItWorksText: "Αυτό το Hand Of Legend είναι «αποδεδειγμένα δίκαιο» (provably fair). Αυτό σημαίνει ότι η πλατφόρμα δεν μπορεί να εξαπατήσει επιλέγοντας ευνοούμενους νικητές. Όλοι οι νικητές επιλέγονται τυχαία με τη μέθοδο που περιγράφεται παρακάτω.",
+              faqProvablyFair: "Γιατί το Σύστημα είναι Αποδεδειγμένα Δίκαιο;",
+              faqProvablyFairText: "Το σύστημα είναι αποδεδειγμένα δίκαιο λόγω των πολλαπλών εγγυήσεών του για τυχαία και δίκαιη επιλογή νικητών. Χρησιμοποιούμε το hash ενός μελλοντικού Bitcoin block ως «client seed», το οποίο είναι απρόβλεπτο μέχρι να εξορυχθεί το block.",
+              faqCheckResults: "Πώς Ελέγχω τα Αποτελέσματα;",
+              faqCheckResultsText: "Όταν πουληθούν όλα τα εισιτήρια, όλα τα δικά σας εισιτήρια συμμετέχουν στην κλήρωση. Η διαδικασία που περιγράφηκε παραπάνω καθορίζει 1 τυχαίο νικητή, ο οποίος κερδίζει έως και 0.15 BTC. Στο κάτω μέρος της σελίδας, θα βρείτε τον πίνακα με τους τελευταίους 10 νικητές."
+            },
+          };
+    
+          // Function to switch language
+          function switchLanguage(lang) {
+            document.querySelector("#about h2").textContent = content[lang].aboutTitle;
+            document.querySelector("#about p:nth-of-type(1)").textContent = content[lang].aboutText1;
+            document.querySelector("#about p:nth-of-type(2)").textContent = content[lang].aboutText2;
+            document.querySelector("#about p:nth-of-type(3)").textContent = content[lang].aboutText3;
+            document.querySelector("#faq h1").textContent = content[lang].faqTitle;
+            document.querySelector("#faq p").textContent = content[lang].faqText;
+            document.querySelector("#wallets h2").textContent = content[lang].walletsTitle;
+            document.querySelector("#winners h2").textContent = content[lang].winnersTitle;
+        
+            // Update remaining tickets and other text
+            document.querySelector("#remaining-tickets").previousElementSibling.textContent = content[lang].remainingTickets;
+            document.querySelector("#ticket-purchase-address").previousElementSibling.textContent = content[lang].ticketPurchaseAddress;
+            document.querySelector("#last-winner").previousElementSibling.textContent = content[lang].lastWinner;
+            if (document.querySelector("#last-winner").textContent === content.en.noWinnersYet || document.querySelector("#last-winner").textContent === content.el.noWinnersYet) {
+              document.querySelector("#last-winner").textContent = content[lang].noWinnersYet;
+            }
+        
+            // Update header text
+            document.querySelector(".brand-heading span:nth-of-type(2)").textContent = content[lang].becomeNextWinner;
+            document.querySelector(".brand-heading span:nth-of-type(3)").textContent = content[lang].liveDraw;
+            document.querySelector(".brand-heading span:nth-of-type(4)").textContent = content[lang].onlyBTC;
+        
+            // Update FAQ content
+            const faqSection = document.querySelector("#faq ul");
+            faqSection.innerHTML = `
+              <h2 class="vc_custom_heading">${content[lang].faqHowToPlay}</h2>
+              <p>${content[lang].faqHowToPlayText}</p>
+              <h2 class="vc_custom_heading">${content[lang].faqHowToBuy}</h2>
+              <p>${content[lang].faqHowToBuyText}</p>
+              <h2 class="vc_custom_heading">${content[lang].faqHowToWin}</h2>
+              <p>${content[lang].faqHowToWinText}</p>
+              <h2 class="vc_custom_heading">${content[lang].faqHowItWorks}</h2>
+              <p>${content[lang].faqHowItWorksText}</p>
+              <h2 class="vc_custom_heading">${content[lang].faqProvablyFair}</h2>
+              <p>${content[lang].faqProvablyFairText}</p>
+              <h2 class="vc_custom_heading">${content[lang].faqCheckResults}</h2>
+              <p>${content[lang].faqCheckResultsText}</p>
+            `;
+          }
+    
+          // Event listener for the language switch button
+          document.getElementById("language-switch").addEventListener("click", () => {
+            const currentLang = document.documentElement.lang;
+            if (currentLang === "en") {
+              document.documentElement.lang = "el";
+              switchLanguage("el");
+              document.getElementById("language-switch").textContent = "English";
+            } else {
+              document.documentElement.lang = "en";
+              switchLanguage("en");
+              document.getElementById("language-switch").textContent = "Ελληνικά";
+            }
+          });
+    </script>
+    <footer style="background-color: #111; color: #ffcc00; padding: 20px 0">
+        <div class="container text-center">
+            <p>Copyright © Brand 2024</p>
+        </div>
+    </footer>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/grayscale.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/scroll-adjust.js"></script>
+</body>
+
+</html>
