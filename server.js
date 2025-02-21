@@ -11,6 +11,7 @@ const fs = require('fs');
 const Ajv = require("ajv"); // Add this line to require Ajv
 const ajv = new Ajv(); // Add this line to create an instance of Ajv
 const lockfile = require('proper-lockfile'); // Add this line to require proper-lockfile
+const http = require('http'); // Add this line to require the http module
 
 const app = express();
 app.use(bodyParser.json());
@@ -80,8 +81,25 @@ function getRemainingTime() {
 }
 
 const TIMESTAMP_FILE = 'timestamp.json';
+const WINNERS_FILE = 'winners.json';
+const WALLETS_FILE = 'wallets.json';
 
 const fsPromises = require('fs').promises;
+
+async function ensureFileExists(filePath) {
+    try {
+        await fsPromises.access(filePath);
+    } catch (error) {
+        await fsPromises.writeFile(filePath, JSON.stringify({}));
+    }
+}
+
+// Ensure all necessary files exist at startup
+(async () => {
+    await ensureFileExists(WINNERS_FILE);
+    await ensureFileExists(TIMESTAMP_FILE);
+    await ensureFileExists(WALLETS_FILE);
+})();
 
 async function saveTimestamp(timestamp) {
     try {
@@ -110,15 +128,21 @@ async function loadTimestamp() {
 
 async function saveWinners(winners) {
     try {
-        await fsPromises.writeFile('winners.json', JSON.stringify(winners, null, 2));
+        await fsPromises.writeFile(WINNERS_FILE, JSON.stringify(winners, null, 2));
     } catch (error) {
         console.error("Error saving winners:", error);
     }
 }
 
+async function loadTickets() {
+    await ensureFileExists(WALLETS_FILE);
+    const data = await fsPromises.readFile(WALLETS_FILE, 'utf8');
+    return data ? JSON.parse(data) : {};
+}
+
 async function saveTickets(tickets) {
     try {
-        await fsPromises.writeFile('wallets.json', JSON.stringify(tickets, null, 2));
+        await fsPromises.writeFile(WALLETS_FILE, JSON.stringify(tickets, null, 2));
     } catch (error) {
         console.error("Error saving tickets:", error);
     }
@@ -127,33 +151,16 @@ async function saveTickets(tickets) {
 // Update processTickets function to use the timestamp from the file
 async function processTickets() {
     try {
-        const isLocked = await lockfile.check('wallets.json');
+        await ensureFileExists(WALLETS_FILE); // Ensure the file exists before locking it
+
+        const isLocked = await lockfile.check(WALLETS_FILE);
         if (isLocked) {
             console.warn("Lock file is already being held");
             return;
         }
-        await lockfile.lock('wallets.json');
+        await lockfile.lock(WALLETS_FILE);
         
-        // Load tickets from wallets.json
-        try {
-            await fsPromises.access('wallets.json');
-            const data = await fsPromises.readFile('wallets.json', 'utf8');
-            if (data && data.trim().length > 0) {
-                try {
-                    tickets = JSON.parse(data);
-                    if (!validateTickets(tickets)) {
-                        tickets = {};
-                    }
-                } catch (error) {
-                    console.error("Error parsing wallets.json:", error);
-                    tickets = {};
-                }
-            } else {
-                tickets = {};
-            }
-        } catch (error) {
-            tickets = {};
-        }
+        tickets = await loadTickets();
 
         const response = await axios.get(`${BLOCKCYPHER_API_URL}/addrs/${HOST_WALLET_ADDRESS}/full?token=${BLOCKCYPHER_TOKEN}`);
         const transactions = response.data.txs;
@@ -201,11 +208,11 @@ async function processTickets() {
 
         await saveTickets(tickets);
         broadcastTickets(remainingTickets);
-        await lockfile.unlock('wallets.json');
+        await lockfile.unlock(WALLETS_FILE);
     } catch (error) {
         console.error("Error processing tickets:", error.message, error.stack);
         try {
-            await lockfile.unlock('wallets.json');
+            await lockfile.unlock(WALLETS_FILE);
         } catch (unlockError) {
             console.error("Error unlocking wallets.json:", unlockError.message, unlockError.stack);
         }
@@ -257,11 +264,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/Index", async (req, res) => {
-    // Load tickets from wallets.json
-    if (fs.existsSync('wallets.json')) {
-        tickets = JSON.parse(fs.readFileSync('wallets.json'));
-    }
-
+    tickets = await loadTickets();
     const ticketsSold = Object.values(tickets).reduce((a, b) => a + b, 0);
     const remainingTickets = Math.max(0, TOTAL_TICKETS - ticketsSold); // Ensure remainingTickets is non-negative
     const hostWalletAddress = HOST_WALLET_ADDRESS;
@@ -277,10 +280,7 @@ app.get("/Index", async (req, res) => {
 });
 
 app.get("/wallets", async (req, res) => {
-    // Load tickets from wallets.json
-    if (fs.existsSync('wallets.json')) {
-        tickets = JSON.parse(fs.readFileSync('wallets.json'));
-    }
+    tickets = await loadTickets();
     res.render("wallets", { tickets });
 });
 
@@ -301,14 +301,14 @@ app.post("/Index/draw", async (req, res) => {
     tickets = {};
 });
 
-const server = app.listen(3000, () => console.log("Lottery backend running on port 3000"));
-
 // Check for received tokens every 100 seconds
 setInterval(async () => {
     await processTickets();
 }, 100000);
 
-const wss = new WebSocket.Server({ server });
+const server = http.createServer(app); // Create an HTTP server using the Express app
+
+const wss = new WebSocket.Server({ server }); // Use the HTTP server with the WebSocket server
 
 wss.on("connection", ws => {
     const sendRemainingTime = () => {
@@ -317,5 +317,10 @@ wss.on("connection", ws => {
     sendRemainingTime();
     const interval = setInterval(sendRemainingTime, 1000);
     ws.on("close", () => clearInterval(interval));
+});
+
+const PORT = process.env.PORT || 3000; // Define the port
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
