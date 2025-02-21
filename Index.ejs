@@ -3,8 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Index</title>
+    <meta 
+        ame="viewport" 
+        content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Home - Brand</title>
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap" />
@@ -15,17 +17,10 @@
     <link rel="stylesheet" href="/css/custom.css" />
     <style>
         body {
-            cursor: url("/img/custom-cursor.png"), auto;
             background-color: #000;
             color: #fff;
             font-family: "Cabin", sans-serif;
             padding-top: 70px; /* Add padding to the top to ensure content is not hidden behind the navbar */
-        }
-
-        a:hover,
-        button:hover,
-        .btn:hover {
-            cursor: url("/img/custom-cursor-clickable.png"), pointer;
         }
 
         .navbar {
@@ -139,6 +134,52 @@
             .table {
                 font-size: 0.875rem;
             }
+
+            /* New styles for centering and scaling text */
+            .intro-body .text-center {
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            .intro-body h1 span {
+                display: block;
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .intro-body p {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            /* Additional styles for centering and scaling text */
+            .intro-body .col-lg-8 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .intro-body .col-lg-8 h1,
+            .intro-body .col-lg-8 p {
+                text-align: center;
+                width: 100%;
+            }
+
+            /* New styles for Bitcoin address */
+            #ticket-purchase-address {
+                word-break: break-all;
+                font-size: 0.875rem; /* Adjust the font size for smaller screens */
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .masthead {
+                padding: 0;
+            }
+
+            .masthead .intro-body {
+                padding: 200px 15px;
+            }
         }
     </style>
     <script>
@@ -198,16 +239,16 @@
                         </h1>
                         <div class="text-center" style="margin: 20px 0">
                             <p>
-                                <span class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Remaining Tickets: </span>
-                                <span id="remaining-tickets" class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"><%= remainingTickets %></span>
+                                <span class="fs-1 fs-mobile" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Remaining Tickets: </span>
+                                <span id="remaining-tickets" class="fs-1 fs-mobile" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"><%= remainingTickets %></span>
                             </p>
                             <p>
-                                <span class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;">Ticket Purchase Address: </span>
-                                <span id="ticket-purchase-address" class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;"><%= hostWalletAddress %></span>
+                                <span class="fs-1 fs-mobile" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;">Ticket Purchase Address: </span>
+                                <span id="ticket-purchase-address" class="fs-1 fs-mobile" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;"><%= hostWalletAddress %></span>
                             </p>
                             <p>
-                                <span class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;">Last Winner: </span>
-                                <span id="last-winner" class="fs-1" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;"><%= lastWinner ? `${lastWinner.address}` : "No winners yet" %></span>
+                                <span class="fs-1 fs-mobile" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;">Last Winner: </span>
+                                <span id="last-winner" class="fs-1 fs-mobile" style="font-weight: normal !important; color: #ffcc00; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); text-transform: none;"><%= lastWinner ? `${lastWinner.address}` : "No winners yet" %></span>
                             </p>
                         </div>
                     </div>
